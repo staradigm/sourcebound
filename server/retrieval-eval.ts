@@ -35,8 +35,12 @@ export function validateDataset(value: unknown): asserts value is Dataset {
       (document) =>
         !document ||
         typeof document.name !== "string" ||
+        !document.name.trim() ||
         typeof document.content !== "string" ||
-        (document.tags !== undefined && !Array.isArray(document.tags)),
+        !document.content.trim() ||
+        (document.tags !== undefined &&
+          (!Array.isArray(document.tags) ||
+            document.tags.some((tag) => typeof tag !== "string" || !tag.trim()))),
     )
   ) {
     throw new Error("Every document must have a name, content, and optional tags.");
@@ -46,8 +50,11 @@ export function validateDataset(value: unknown): asserts value is Dataset {
       (query) =>
         !query ||
         typeof query.id !== "string" ||
+        !query.id.trim() ||
         typeof query.query !== "string" ||
-        typeof query.expectedSource !== "string",
+        !query.query.trim() ||
+        typeof query.expectedSource !== "string" ||
+        !query.expectedSource.trim(),
     )
   ) {
     throw new Error("Every query must have an id, query, and expected source.");

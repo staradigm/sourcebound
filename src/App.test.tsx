@@ -171,4 +171,18 @@ describe("Sourcebound workspace", () => {
     const form = batchCall?.[1]?.body as FormData;
     expect(form.getAll("files")).toHaveLength(1);
   });
+
+  it("rejects a folder with no supported sources before making a request", async () => {
+    render(<App />);
+    await screen.findByText("research.md");
+    const image = new File(["not supported"], "photo.png", { type: "image/png" });
+    const callsBeforeSelection = vi.mocked(fetch).mock.calls.length;
+
+    fireEvent.change(screen.getByLabelText("Choose a folder"), {
+      target: { files: [image] },
+    });
+
+    await screen.findByText("The selected folder contains no Markdown or text files.");
+    expect(vi.mocked(fetch).mock.calls).toHaveLength(callsBeforeSelection);
+  });
 });

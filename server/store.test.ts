@@ -167,5 +167,7 @@ describe("document store", () => {
       ),
     ).toThrow("at most 10");
     expect(() => store.setTags(1, ["valid", 123])).toThrow("must be a string");
+    expect(store.setTags(1, ["a".repeat(32)])?.tags).toEqual(["a".repeat(32)]);
+    expect(() => store.setTags(1, ["a".repeat(33)])).toThrow("at most 32");
   });
 });

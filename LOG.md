@@ -328,3 +328,40 @@ all critical/high findings and disposition lower-severity findings before pilot 
 
 Run the complete clean-install gate, commit and push the exact candidate, obtain green
 CI, then repeat all independent reviews before pilot UAT.
+
+## Milestone 2, Iteration 3 - Candidate clearance
+
+**Date:** 2026-07-30
+
+**Candidate**
+
+- Commit: `a023570`.
+- GitHub Actions run `30586158111`: pass on install, lint, 24 tests, build, benchmark,
+  retrieval evaluation, and audit.
+
+**Independent re-review**
+
+- Code/security: all prior high findings resolved; no critical/high blockers remain.
+- UX/accessibility: all prior medium findings resolved or reduced to low polish; no
+  critical/high blockers remain.
+- Release verification: engineering clear to proceed to pilot.
+
+**Residual hardening**
+
+- Corrected the evaluation description and tightened nonempty/tag-element validation.
+- Added exact 50-file acceptance, 32/33-character tag boundaries, and all-unsupported
+  folder rejection tests.
+- Documented the bounded in-memory batch-processing constraint.
+- Added `/` to focus search from the reader, avoiding traversal through large libraries.
+
+**Evidence**
+
+- `npm test`: 5 files, 26 tests pass.
+- `npm run eval:retrieval`: recall@5 1.0; top-1 accuracy 0.98.
+- `npm run lint` and `npm run build`: pass.
+
+**Next action**
+
+Push the final pilot candidate, confirm exact-commit CI, then run independent UAT for a
+mixed folder, batch result, tag add/remove, combined filters, query preservation, and
+source open.

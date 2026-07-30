@@ -113,6 +113,20 @@ describe("document API", () => {
     expect(store.list()).toEqual([]);
   });
 
+  it("accepts exactly 50 files in one batch", async () => {
+    let requestBuilder = request(app).post("/api/documents/batch");
+    for (let index = 0; index < 50; index += 1) {
+      requestBuilder = requestBuilder.attach(
+        "files",
+        Buffer.from(`Boundary source ${index}.`),
+        `boundary-${index}.md`,
+      );
+    }
+    const response = await requestBuilder.expect(201);
+    expect(response.body.imported).toBe(50);
+    expect(store.list()).toHaveLength(50);
+  });
+
   it("updates tags and filters library and search results", async () => {
     const research = store.add("research.md", "A trustworthy retrieval source.");
     store.add("personal.md", "Another trustworthy source.");

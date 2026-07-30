@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "description": "Sourcebound lexical retrieval baseline with 10 sources and 50 queries.",
+  "description": "Sourcebound lexical retrieval baseline with 50 documents and 50 queries.",
   "documents": [
     {
       "name": "astronomy-field-notes.md",

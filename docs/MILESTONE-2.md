@@ -35,6 +35,13 @@ release.
   automated coverage.
 - Local-first, loopback-only, keyboard, responsive, audit, and CI gates continue to pass.
 
+## Operational constraint
+
+Batch uploads use in-memory multipart processing. The enforced maximum is 50 files at
+5 MB each, so a deliberately maximal local request can temporarily consume roughly
+250 MB plus decoding and database copies. The API remains loopback-only; streaming
+staging is a future hardening item.
+
 ## Non-goals
 
 - PDF/DOCX/OCR ingestion
