@@ -1,5 +1,7 @@
 # Milestone 2: Trustworthy Retrieval
 
+**Release-slice status:** `v0.2.0` complete. PDF/page citations remain the next slice.
+
 ## Release slice
 
 Version `0.2.0` makes larger local libraries manageable without adding cloud services or

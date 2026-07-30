@@ -19,7 +19,7 @@
 - [x] Add filename and tag filters.
 - [x] Define a versioned 50-query retrieval evaluation dataset.
 - [x] Boost filename matches and verify recall@5.
-- [ ] Release `v0.2.0`.
+- [x] Release `v0.2.0`.
 - [ ] Add PDF ingestion with page-level source locations in the next release slice.
 
 ## Milestone 3: Cited answers

@@ -403,3 +403,32 @@ source open.
 
 Publish the race fix, confirm CI, run focused pilot verification for rapid mutations and
 hyphenated search, then tag and release `v0.2.0`.
+
+## Milestone 2, Iteration 5 - Public v0.2.0 release
+
+**Date:** 2026-07-30
+
+**Final verification**
+
+- Release commit: `c5fa39f`.
+- GitHub Actions run `30586905540`: pass on install, lint, 26 tests, build, benchmark,
+  retrieval evaluation, and audit.
+- Exact visible hyphenated-token search: pilot pass.
+- Raw keypress during pending tag removal: ignored as designed; draft preserved.
+- Explicit tag submission after removal: pass with correct final tag state.
+- Independent code/security and UI reviews: no unresolved critical/high findings.
+- Full mixed-folder/tag/filter/source-open pilot at 320x800: pass.
+
+**Release**
+
+- Tag: `v0.2.0`.
+- Public URL: `https://github.com/staradigm/sourcebound/releases/tag/v0.2.0`.
+- Retrieval metrics: recall@5 1.0; top-1 accuracy 0.98 on dataset v1.0.
+- Known constraint: memory-backed multipart processing can temporarily use roughly
+  250 MB plus copies for a deliberately maximal local batch.
+
+**Stop result**
+
+Every `v0.2.0` acceptance criterion in `docs/MILESTONE-2.md` passes. The release slice
+stops here. PDF ingestion with page-level source locations remains the next Milestone 2
+slice and was not pulled into this release.
