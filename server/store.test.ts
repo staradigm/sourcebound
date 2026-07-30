@@ -144,9 +144,13 @@ describe("document store", () => {
   });
 
   it("treats punctuation as text and preserves quoted phrases", () => {
-    store.add("interview.md", "Use open-ended questions during oral history.");
+    store.add(
+      "interview.md",
+      "Use open-ended questions during oral history. Archive token: CELESTIAL-OTTER-9037.",
+    );
 
     expect(store.search("open-ended questions")).toHaveLength(1);
+    expect(store.search("CELESTIAL-OTTER-9037")).toHaveLength(1);
     expect(compileSearchQuery('"oral history" questions')).toBe(
       '"oral history" AND "questions"',
     );

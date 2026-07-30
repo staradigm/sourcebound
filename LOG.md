@@ -365,3 +365,41 @@ CI, then repeat all independent reviews before pilot UAT.
 Push the final pilot candidate, confirm exact-commit CI, then run independent UAT for a
 mixed folder, batch result, tag add/remove, combined filters, query preservation, and
 source open.
+
+## Milestone 2, Iteration 4 - Pilot UAT
+
+**Date:** 2026-07-30
+
+**Pilot environment**
+
+- Candidate: `11db8ef`.
+- CI run `30586505004`: pass.
+- Browser: real Chrome at 320x800, visible UI only.
+
+**Required workflow**
+
+- Mixed folder: pass; two supported sources imported and one CSV skipped with exact
+  visible feedback.
+- Source open/full content: pass.
+- Temporary tag add/remove and final tag add: pass after awaiting each mutation.
+- Distinctive search plus filename and tag filters: pass; exactly one expected result.
+- Clear filters while preserving query: pass.
+- Reopen and complete source verification: pass.
+
+**Pilot observations**
+
+- An early exact hyphenated-token search transiently showed zero results; direct live
+  reproduction and a new store regression test both return the expected source.
+- Rapid remove-tag then add-tag could dispatch against stale state before React rendered
+  the disabled controls.
+
+**Remediation**
+
+- Added an immediate ref-backed tag mutation lock in addition to the rendered busy state,
+  closing the same-event-loop race.
+- Added explicit exact hyphenated-token retrieval coverage.
+
+**Next action**
+
+Publish the race fix, confirm CI, run focused pilot verification for rapid mutations and
+hyphenated search, then tag and release `v0.2.0`.

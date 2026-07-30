@@ -82,6 +82,7 @@ export function App() {
   const [availableTags, setAvailableTags] = useState<TagSummary[]>([]);
   const [tagDraft, setTagDraft] = useState("");
   const [tagBusy, setTagBusy] = useState(false);
+  const tagBusyRef = useRef(false);
   const fileInput = useRef<HTMLInputElement>(null);
   const folderInput = useRef<HTMLInputElement>(null);
   const searchInput = useRef<HTMLInputElement>(null);
@@ -242,7 +243,8 @@ export function App() {
   }
 
   async function updateTags(tags: string[]) {
-    if (!selected || tagBusy) return false;
+    if (!selected || tagBusyRef.current) return false;
+    tagBusyRef.current = true;
     setTagBusy(true);
     try {
       const document = await readJson<Document>(
@@ -261,6 +263,7 @@ export function App() {
       setError(reason instanceof Error ? reason.message : "Could not update tags.");
       return false;
     } finally {
+      tagBusyRef.current = false;
       setTagBusy(false);
     }
   }
