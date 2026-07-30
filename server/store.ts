@@ -1,5 +1,6 @@
 import { mkdirSync } from "node:fs";
 import { dirname } from "node:path";
+import { randomUUID } from "node:crypto";
 import { DatabaseSync } from "node:sqlite";
 
 export type Document = {
@@ -12,7 +13,34 @@ export type Document = {
 
 export type SearchResult = Omit<Document, "content"> & {
   excerpt: string;
+  highlights: Array<[number, number]>;
 };
+
+function parseHighlightedExcerpt(value: string, startMarker: string, endMarker: string) {
+  let excerpt = "";
+  const highlights: Array<[number, number]> = [];
+  let cursor = 0;
+
+  while (cursor < value.length) {
+    const start = value.indexOf(startMarker, cursor);
+    if (start === -1) {
+      excerpt += value.slice(cursor);
+      break;
+    }
+    excerpt += value.slice(cursor, start);
+    const matchStart = excerpt.length;
+    const end = value.indexOf(endMarker, start + startMarker.length);
+    if (end === -1) {
+      excerpt += value.slice(start);
+      break;
+    }
+    excerpt += value.slice(start + startMarker.length, end);
+    highlights.push([matchStart, excerpt.length]);
+    cursor = end + endMarker.length;
+  }
+
+  return { excerpt, highlights };
+}
 
 export function createStore(databasePath = "data/sourcebound.db") {
   if (databasePath !== ":memory:") {
@@ -69,16 +97,20 @@ export function createStore(databasePath = "data/sourcebound.db") {
         .get(id) as Document | undefined;
     },
     search(query: string): SearchResult[] {
-      return db
+      const markerId = randomUUID();
+      const startMarker = `\uE000${markerId}:start\uE001`;
+      const endMarker = `\uE000${markerId}:end\uE001`;
+      const rows = db
         .prepare(
           `SELECT d.id, d.name, d.size, d.created_at AS createdAt,
-                  snippet(documents_fts, 1, '<mark>', '</mark>', '...', 24) AS excerpt
+                  snippet(documents_fts, 1, ?, ?, '...', 24) AS excerpt
            FROM documents_fts
            JOIN documents d ON d.id = documents_fts.rowid
            WHERE documents_fts MATCH ?
            ORDER BY rank LIMIT 50`,
         )
-        .all(query) as SearchResult[];
+        .all(startMarker, endMarker, query) as Array<Omit<SearchResult, "highlights">>;
+      return rows.map((row) => ({ ...row, ...parseHighlightedExcerpt(row.excerpt, startMarker, endMarker) }));
     },
     remove(id: number) {
       return db.prepare("DELETE FROM documents WHERE id = ?").run(id).changes > 0;

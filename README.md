@@ -12,7 +12,7 @@ See the [product requirements](docs/PRD.md) and [delivery plan](docs/PLAN.md).
 
 ## Run locally
 
-Requirements: Node.js 22.5 or newer.
+Requirements: Node.js 22.12 or newer.
 
 ```bash
 npm install
@@ -25,8 +25,12 @@ stored in `data/sourcebound.db`.
 ## Verify
 
 ```bash
+npm ci
+npm run lint
 npm test
 npm run build
+npm run benchmark
+npm audit
 ```
 
 ## Privacy model

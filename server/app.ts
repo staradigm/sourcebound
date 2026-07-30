@@ -1,5 +1,5 @@
 import express from "express";
-import multer from "multer";
+import multer, { MulterError } from "multer";
 import type { Store } from "./store.js";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
@@ -58,7 +58,15 @@ export function createApp(store: Store) {
 
   app.use((error: Error, _request: express.Request, response: express.Response, next: express.NextFunction) => {
     void next;
-    response.status(400).json({ error: error.message });
+    if (error instanceof MulterError) {
+      const message = error.code === "LIMIT_FILE_SIZE" ? "File too large. Maximum size is 5 MB." : "File upload failed.";
+      return response.status(400).json({ error: message });
+    }
+    if (error.message === "Only .md and .txt files are supported.") {
+      return response.status(400).json({ error: error.message });
+    }
+    console.error("Unhandled API error:", error);
+    response.status(500).json({ error: "The request could not be completed." });
   });
 
   return app;

@@ -1,6 +1,6 @@
 # Delivery Plan
 
-## Milestone 1: Searchable local library (in progress)
+## Milestone 1: Searchable local library (release verification)
 
 - [x] Define MVP scope, user stories, acceptance criteria, and success metrics.
 - [x] Create React workspace and local HTTP API.
@@ -8,9 +8,9 @@
 - [x] Index content with SQLite FTS5.
 - [x] Build import, library, search, reader, error, empty, and delete states.
 - [x] Add focused store tests.
-- [ ] Add API integration tests.
-- [ ] Add keyboard navigation and accessibility checks.
-- [ ] Run a 1,000-document latency benchmark.
+- [x] Add API integration tests.
+- [x] Add keyboard navigation and accessibility checks.
+- [x] Run a 1,000-document latency benchmark.
 
 ## Milestone 2: Trustworthy retrieval
 
