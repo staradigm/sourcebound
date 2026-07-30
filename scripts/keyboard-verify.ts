@@ -41,7 +41,7 @@ async function verifyViewport(page: Page, width: number, filePath: string, keywo
   await page.goto(APP_URL);
 
   await tabUntil(page, async () =>
-    page.evaluate(() => document.activeElement?.getAttribute("aria-label") === "Import document"),
+    page.evaluate(() => document.activeElement?.getAttribute("aria-label") === "Import files"),
   );
   const chooserPromise = page.waitForEvent("filechooser");
   await page.keyboard.press("Enter");
@@ -49,14 +49,8 @@ async function verifyViewport(page: Page, width: number, filePath: string, keywo
   await chooser.setFiles(filePath);
   await page.getByRole("heading", { name: filePath.split("/").at(-1) }).waitFor();
 
-  await tabUntil(
-    page,
-    async () =>
-      page.evaluate(
-        () => document.activeElement?.id === "library-search",
-      ),
-    "backward",
-  );
+  await page.keyboard.press("/");
+  await page.waitForFunction(() => document.activeElement?.id === "library-search");
   await page.keyboard.type(keyword);
   await page.getByText(keyword, { exact: true }).waitFor();
   await tabUntil(page, async () =>
@@ -66,8 +60,12 @@ async function verifyViewport(page: Page, width: number, filePath: string, keywo
 
   const heading = page.getByRole("heading", { name: filePath.split("/").at(-1) });
   await heading.waitFor();
-  const headingFocused = await heading.evaluate((element) => document.activeElement === element);
-  if (!headingFocused) throw new Error(`Reader heading did not receive focus at ${width}px.`);
+  await page.waitForFunction(
+    (expectedName) =>
+      document.activeElement?.tagName === "H2" &&
+      document.activeElement.textContent?.trim() === expectedName,
+    filePath.split("/").at(-1),
+  );
 
   await page.addScriptTag({ path: require.resolve("axe-core/axe.min.js") });
   const seriousViolations = await page.evaluate(async () => {

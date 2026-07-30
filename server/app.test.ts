@@ -75,4 +75,71 @@ describe("document API", () => {
   it("reports health", async () => {
     expect((await request(app).get("/api/health").expect(200)).body).toEqual({ status: "ok" });
   });
+
+  it("imports a valid batch atomically", async () => {
+    const response = await request(app)
+      .post("/api/documents/batch")
+      .attach("files", Buffer.from("First valid source."), "first.md")
+      .attach("files", Buffer.from("Second valid source."), "second.txt")
+      .expect(201);
+    expect(response.body.imported).toBe(2);
+    expect(store.list()).toHaveLength(2);
+
+    await request(app)
+      .post("/api/documents/batch")
+      .attach("files", Buffer.from("Would otherwise be valid."), "third.md")
+      .attach("files", Buffer.from(""), "empty.txt")
+      .expect(400);
+    expect(store.list()).toHaveLength(2);
+  });
+
+  it("rejects mixed unsupported and over-limit batches without partial writes", async () => {
+    await request(app)
+      .post("/api/documents/batch")
+      .attach("files", Buffer.from("Valid source."), "valid.md")
+      .attach("files", Buffer.from("Unsupported source."), "unsupported.pdf")
+      .expect(400);
+    expect(store.list()).toEqual([]);
+
+    let requestBuilder = request(app).post("/api/documents/batch");
+    for (let index = 0; index < 51; index += 1) {
+      requestBuilder = requestBuilder.attach(
+        "files",
+        Buffer.from(`Source ${index}.`),
+        `source-${index}.md`,
+      );
+    }
+    await requestBuilder.expect(400);
+    expect(store.list()).toEqual([]);
+  });
+
+  it("updates tags and filters library and search results", async () => {
+    const research = store.add("research.md", "A trustworthy retrieval source.");
+    store.add("personal.md", "Another trustworthy source.");
+
+    const updated = await request(app)
+      .patch(`/api/documents/${research!.id}/tags`)
+      .send({ tags: [" Research ", "EVALUATION"] })
+      .expect(200);
+    expect(updated.body.tags).toEqual(["evaluation", "research"]);
+
+    const tags = await request(app).get("/api/tags").expect(200);
+    expect(tags.body).toContainEqual({ name: "research", count: 1 });
+    const library = await request(app)
+      .get("/api/documents")
+      .query({ filename: "research", tag: "evaluation" })
+      .expect(200);
+    expect(library.body.map(({ name }: { name: string }) => name)).toEqual(["research.md"]);
+    const search = await request(app)
+      .get("/api/search")
+      .query({ q: "trustworthy", tag: "research" })
+      .expect(200);
+    expect(search.body.map(({ name }: { name: string }) => name)).toEqual(["research.md"]);
+
+    await request(app)
+      .patch(`/api/documents/${research!.id}/tags`)
+      .send({ tags: [] })
+      .expect(200);
+    expect((await request(app).get("/api/tags").expect(200)).body).toEqual([]);
+  });
 });

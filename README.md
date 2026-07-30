@@ -6,8 +6,9 @@ document contents to an external service.
 
 ## Status
 
-Sourcebound is an early public MVP. The current vertical slice supports single-file
-import, persistent local storage, full-text search, source reading, and deletion.
+Sourcebound is an early public project. Version 0.2 supports multi-file and folder
+import, persistent local storage, normalized tags, filename/tag filters, full-text
+search, source reading, and deletion.
 See the [product requirements](docs/PRD.md) and [delivery plan](docs/PLAN.md).
 
 ## Run locally
@@ -30,6 +31,7 @@ npm run lint
 npm test
 npm run build
 npm run benchmark
+npm run eval:retrieval
 npm audit
 ```
 
@@ -41,6 +43,10 @@ npm run verify:keyboard
 
 This performs the import-search-open workflow entirely through keyboard activation at
 320 px and 1440 px, then runs axe-core in the real browser.
+
+The versioned retrieval gate is defined in
+[`eval/retrieval-v1.json`](eval/retrieval-v1.json). It uses 50 documents and 50 queries
+and enforces both recall@5 and top-1 accuracy targets.
 
 ## Privacy model
 

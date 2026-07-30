@@ -224,3 +224,107 @@ Every quality gate in `GOAL.md` passes. All in-scope Milestone 1 items are compl
 independent reviewers report no unresolved critical or high findings, pilot UAT passes,
 and the verified release is public. The execution loop stops here. Later milestones
 remain roadmap work and do not extend this completed MVP goal.
+
+## Milestone 2, Iteration 0 - Retrieval scope
+
+**Date:** 2026-07-30
+
+**Starting state**
+
+- Base release: `v0.1.0`.
+- Main branch CI: passing at `6de565e`.
+- Existing databases contain only the `documents` and `documents_fts` schema.
+
+**Decisions**
+
+- Deliver batch/folder import, tags, constrained search, ranking, and evaluation as
+  `v0.2.0`.
+- Keep schema changes additive and preserve all existing documents.
+- Validate complete batches before writing any document.
+- Normalize tags to lowercase user metadata; do not mutate document contents.
+- Defer PDF extraction until page-level source locations have a dedicated contract.
+
+**Stop condition**
+
+Use the acceptance criteria in `docs/MILESTONE-2.md`, repeat implementation/review
+cycles until all gates pass, then publish `v0.2.0`.
+
+## Milestone 2, Iteration 1 - Metadata and retrieval
+
+**Date:** 2026-07-30
+
+**Implemented**
+
+- Added additive `tags` and `document_tags` schema with cascade cleanup.
+- Added normalized tag editing and global tag counts.
+- Added atomic batch import for up to 50 Markdown/text files.
+- Added browser file and folder selection controls.
+- Added filename/tag filters to library listing and full-text search.
+- Added safe user-query compilation for punctuation and quoted phrases.
+- Added explicit filename weighting through FTS5 `bm25`.
+- Added a versioned 10-document, 50-query retrieval dataset and recall@5 evaluator.
+- Added filter, tag, batch atomicity, migration-compatible persistence, ranking, and
+  evaluation coverage.
+
+**Evidence**
+
+- `npm test`: 5 files, 19 tests pass.
+- `npm run lint`: pass.
+- `npm run build`: pass.
+- `npm run benchmark`: reopened 1,000-document database, 5.529 ms p95.
+- `npm run eval:retrieval`: 50/50 hits, recall@5 1.0, target 0.9.
+- `npm run verify:keyboard`: pass at 320 and 1440; zero serious/critical axe violations.
+- `npm audit`: zero vulnerabilities.
+- Live API: two-file batch import, tag normalization, and combined filename/tag search
+  pass against the migrated on-disk database.
+- Playwright viewports: no horizontal overflow at 320 or 1440.
+
+**Next action**
+
+Triage independent code/security, UI/accessibility, and release-readiness reviews; fix
+all critical/high findings and disposition lower-severity findings before pilot UAT.
+
+## Milestone 2, Iteration 2 - Review remediation
+
+**Date:** 2026-07-30
+
+**Independent findings**
+
+- Code/security: no critical findings; release version and genuine v0.1 migration
+  coverage were high blockers. Tag boundaries, batch rollback coverage, evaluator
+  validity, and non-string tags required strengthening.
+- UX/accessibility: no critical/high findings. Filtered-empty recovery, tag mutation
+  state, import discoverability, touch targets, and accessible group relationships were
+  medium/low findings.
+- Release verification: stop pending mixed-folder behavior, broader automated coverage,
+  credible distractors/rank metrics, metadata, exact-commit CI, and pilot evidence.
+
+**Remediation**
+
+- Bumped package and lockfile metadata to `0.2.0`; updated README and changelog.
+- Added a real v0.1 schema/FTS fixture and verified document, search, tag, and reopen
+  preservation after migration.
+- Applied the 10-tag limit after normalization/deduplication and rejected non-string
+  metadata.
+- Added mixed-unsupported and 51-file batch rejection tests with zero stored rows.
+- Folder selection now imports supported Markdown/text files and reports skipped files.
+- Expanded evaluation from 10 to 50 documents with 40 overlapping distractors.
+- Added dataset schema/invariant validation and negative tests.
+- Added a 90% top-1 target alongside 90% recall@5.
+- Added tag removal/persistence, combined UI filter/search, clear-filter query
+  preservation, and mixed-folder UI coverage.
+- Added visible file/folder labels, filtered-empty clearing, tag mutation locking and
+  repeated announcements, larger mobile targets, and explicit filter/tag groups.
+
+**Evidence**
+
+- `npm test`: 5 files, 24 tests pass.
+- `npm run lint`: pass.
+- `npm run build`: pass.
+- `npm run eval:retrieval`: recall@5 1.0; top-1 accuracy 0.98.
+- Playwright 320/1440 filtered-empty state: no overflow; visible recovery action.
+
+**Next action**
+
+Run the complete clean-install gate, commit and push the exact candidate, obtain green
+CI, then repeat all independent reviews before pilot UAT.

@@ -14,11 +14,13 @@
 
 ## Milestone 2: Trustworthy retrieval
 
-- Add folder and multi-file import.
-- Add tags and filename filters.
-- Define a versioned retrieval evaluation dataset.
-- Improve passage segmentation and ranking.
-- Add PDF ingestion with page-level source locations.
+- [x] Add atomic multi-file and folder import.
+- [x] Add normalized document tags.
+- [x] Add filename and tag filters.
+- [x] Define a versioned 50-query retrieval evaluation dataset.
+- [x] Boost filename matches and verify recall@5.
+- [ ] Release `v0.2.0`.
+- [ ] Add PDF ingestion with page-level source locations in the next release slice.
 
 ## Milestone 3: Cited answers
 

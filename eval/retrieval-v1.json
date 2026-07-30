@@ -1,0 +1,268 @@
+{
+  "version": "1.0",
+  "description": "Sourcebound lexical retrieval baseline with 10 sources and 50 queries.",
+  "documents": [
+    {
+      "name": "astronomy-field-notes.md",
+      "tags": ["science", "space"],
+      "content": "Kepler telescope observations identify an exoplanet through repeated transit photometry. Follow-up spectroscopy estimates atmospheric composition while orbital period and stellar brightness constrain the habitable zone."
+    },
+    {
+      "name": "fermentation-handbook.md",
+      "tags": ["food", "biology"],
+      "content": "Sourdough starter depends on wild yeast and lactic acid bacteria. Regular feeding, stable hydration, and warm fermentation produce carbon dioxide, acidity, and a reliable bread rise."
+    },
+    {
+      "name": "distributed-systems-runbook.md",
+      "tags": ["engineering", "operations"],
+      "content": "A distributed service uses quorum consensus and leader election. During network partition, idempotent retries, bounded timeouts, replication lag monitoring, and a circuit breaker reduce cascading failure."
+    },
+    {
+      "name": "urban-garden-plan.md",
+      "tags": ["garden", "planning"],
+      "content": "The rooftop garden pairs tomatoes with basil, uses drip irrigation, and improves clay soil with compost. Crop rotation and native pollinator flowers reduce pests across the growing season."
+    },
+    {
+      "name": "oral-history-methods.md",
+      "tags": ["research", "history"],
+      "content": "An oral history interview begins with informed consent and open-ended questions. The researcher records provenance, creates a transcript, preserves the audio archive, and lets narrators review sensitive passages."
+    },
+    {
+      "name": "accessibility-audit.md",
+      "tags": ["design", "accessibility"],
+      "content": "Accessible interfaces provide visible keyboard focus, semantic headings, sufficient color contrast, descriptive labels, and polite live regions. Screen reader testing complements automated WCAG checks."
+    },
+    {
+      "name": "cashflow-forecast.md",
+      "tags": ["finance", "business"],
+      "content": "A rolling cash flow forecast separates accounts receivable from recognized revenue. Scenario planning tracks burn rate, payment timing, operating expenses, runway, and a minimum reserve."
+    },
+    {
+      "name": "trail-navigation.md",
+      "tags": ["outdoors", "safety"],
+      "content": "Backcountry navigation combines a topographic map, compass bearing, contour lines, and known landmarks. Hikers record a turnaround time, carry emergency shelter, and avoid relying on one battery-powered device."
+    },
+    {
+      "name": "privacy-threat-model.md",
+      "tags": ["security", "privacy"],
+      "content": "A privacy threat model maps data flow, trust boundaries, retention, and attacker capability. Data minimization, local storage, encryption, access control, and deletion reduce exposure."
+    },
+    {
+      "name": "museum-cataloging.md",
+      "tags": ["museum", "archives"],
+      "content": "Museum cataloging assigns an accession number, records object provenance, condition, dimensions, material, and conservation history. Controlled vocabulary and high-resolution photography support collection discovery."
+    },
+    {
+      "name": "telescope-budget.md",
+      "content": "The astronomy department budget replaces a telescope mount and funds public observations but does not cover exoplanet spectroscopy."
+    },
+    {
+      "name": "stellar-brightness-log.md",
+      "content": "A nightly log records stellar brightness, clouds, and telescope calibration without analyzing planetary transit photometry."
+    },
+    {
+      "name": "space-policy-brief.md",
+      "content": "Space policy allocates launch capacity for science missions and discusses a broad habitable worlds program."
+    },
+    {
+      "name": "orbital-mechanics.md",
+      "content": "Orbital period calculations use velocity and distance for satellites rather than atmospheric composition."
+    },
+    {
+      "name": "bakery-inventory.md",
+      "content": "The bakery inventory tracks bread flour, hydration labels, delivery timing, and carbon dioxide canisters."
+    },
+    {
+      "name": "yogurt-culture.md",
+      "content": "A yogurt culture uses lactic acid bacteria at a stable warm temperature but contains no wild yeast starter."
+    },
+    {
+      "name": "bread-sales.md",
+      "content": "Weekly bread sales compare sourdough loaves, reliable suppliers, price, and customer demand."
+    },
+    {
+      "name": "microbiology-lab.md",
+      "content": "The microbiology lab observes bacteria and yeast colonies while documenting acidity and sterile feeding media."
+    },
+    {
+      "name": "network-inventory.md",
+      "content": "The network inventory lists distributed routers, replication hardware, maintenance windows, and bounded equipment warranties."
+    },
+    {
+      "name": "incident-timeouts.md",
+      "content": "An incident report attributes cascading failure to retries without timeouts and recommends monitoring."
+    },
+    {
+      "name": "database-replication.md",
+      "content": "Database replication lag increased during a partition, while an elected leader continued serving reads."
+    },
+    {
+      "name": "service-design.md",
+      "content": "A service design uses idempotent operations, a circuit breaker, and consensus terminology in its architecture review."
+    },
+    {
+      "name": "rooftop-permit.md",
+      "content": "A rooftop permit covers irrigation weight, growing containers, and seasonal access for an urban building."
+    },
+    {
+      "name": "tomato-recipes.md",
+      "content": "Tomatoes and basil appear in summer recipes alongside bread, acidity, and garden herbs."
+    },
+    {
+      "name": "soil-testing.md",
+      "content": "Soil testing measures clay, compost, drainage, and nutrients before planting flowers."
+    },
+    {
+      "name": "pollinator-survey.md",
+      "content": "A pollinator survey counts native bees around flowers and notes crop pests across the season."
+    },
+    {
+      "name": "interview-schedule.md",
+      "content": "The interview schedule lists narrators, review dates, open questions, and recording rooms."
+    },
+    {
+      "name": "archive-storage.md",
+      "content": "The archive stores audio and transcript files with provenance metadata and access controls."
+    },
+    {
+      "name": "research-consent.md",
+      "content": "Research participants provide informed consent before sensitive passages are collected."
+    },
+    {
+      "name": "podcast-production.md",
+      "content": "Podcast production uses an open-ended interview, audio editing, and a final narrator review."
+    },
+    {
+      "name": "design-review.md",
+      "content": "A design review checks labels, headings, interface color choices, and consistent component spacing."
+    },
+    {
+      "name": "keyboard-shortcuts.md",
+      "content": "Keyboard shortcuts improve focus movement, while visible commands help frequent users."
+    },
+    {
+      "name": "screen-reader-notes.md",
+      "content": "Screen reader notes cover live regions, descriptive labels, and semantic document landmarks."
+    },
+    {
+      "name": "wcag-planning.md",
+      "content": "WCAG planning schedules automated checks and manual testing for contrast and keyboard access."
+    },
+    {
+      "name": "revenue-report.md",
+      "content": "The revenue report reconciles recognized revenue, accounts receivable, payment timing, and expenses."
+    },
+    {
+      "name": "runway-scenarios.md",
+      "content": "Scenario planning compares burn rate, runway, reserve levels, and operating cost assumptions."
+    },
+    {
+      "name": "invoice-process.md",
+      "content": "Invoice processing monitors receivable aging, payment status, and minimum approval limits."
+    },
+    {
+      "name": "annual-budget.md",
+      "content": "The annual budget estimates cash needs, revenue growth, operating expenses, and a reserve."
+    },
+    {
+      "name": "compass-maintenance.md",
+      "content": "Compass maintenance checks the bearing dial and protective case before a trail trip."
+    },
+    {
+      "name": "topographic-printing.md",
+      "content": "Map printing preserves topographic contour lines, scale, and known landmarks."
+    },
+    {
+      "name": "emergency-shelter.md",
+      "content": "An emergency shelter checklist includes battery devices, turnaround time, and weather protection."
+    },
+    {
+      "name": "hiking-itinerary.md",
+      "content": "A backcountry hiking itinerary records trail distance, compass checkpoints, and a return time."
+    },
+    {
+      "name": "data-retention-policy.md",
+      "content": "A data retention policy defines deletion schedules, access control, and storage duration."
+    },
+    {
+      "name": "encryption-key-plan.md",
+      "content": "The encryption plan maps key access, attacker capability, and local recovery procedures."
+    },
+    {
+      "name": "security-data-flow.md",
+      "content": "A security diagram shows data flow across trust boundaries and external services."
+    },
+    {
+      "name": "storage-minimization.md",
+      "content": "Local storage design applies data minimization and limits exposure through short retention."
+    },
+    {
+      "name": "collection-photography.md",
+      "content": "Collection photography records object dimensions, material color, and a high-resolution image."
+    },
+    {
+      "name": "conservation-report.md",
+      "content": "A conservation report tracks object condition, treatment history, material, and review dates."
+    },
+    {
+      "name": "archive-vocabulary.md",
+      "content": "The archive uses controlled vocabulary, accession identifiers, and provenance fields for discovery."
+    },
+    {
+      "name": "museum-exhibit.md",
+      "content": "A museum exhibit plan selects catalog objects, writes labels, and schedules condition checks."
+    }
+  ],
+  "queries": [
+    { "id": "AST-01", "query": "exoplanet transit", "expectedSource": "astronomy-field-notes.md" },
+    { "id": "AST-02", "query": "Kepler photometry", "expectedSource": "astronomy-field-notes.md" },
+    { "id": "AST-03", "query": "habitable zone", "expectedSource": "astronomy-field-notes.md" },
+    { "id": "AST-04", "query": "atmospheric spectroscopy", "expectedSource": "astronomy-field-notes.md" },
+    { "id": "AST-05", "query": "astronomy field notes", "expectedSource": "astronomy-field-notes.md" },
+    { "id": "FER-01", "query": "wild yeast sourdough", "expectedSource": "fermentation-handbook.md" },
+    { "id": "FER-02", "query": "starter hydration", "expectedSource": "fermentation-handbook.md" },
+    { "id": "FER-03", "query": "lactic acid bacteria sourdough", "expectedSource": "fermentation-handbook.md" },
+    { "id": "FER-04", "query": "reliable bread rise", "expectedSource": "fermentation-handbook.md" },
+    { "id": "FER-05", "query": "fermentation handbook", "expectedSource": "fermentation-handbook.md" },
+    { "id": "SYS-01", "query": "quorum consensus", "expectedSource": "distributed-systems-runbook.md" },
+    { "id": "SYS-02", "query": "leader election", "expectedSource": "distributed-systems-runbook.md" },
+    { "id": "SYS-03", "query": "network partition retries", "expectedSource": "distributed-systems-runbook.md" },
+    { "id": "SYS-04", "query": "replication lag circuit breaker", "expectedSource": "distributed-systems-runbook.md" },
+    { "id": "SYS-05", "query": "distributed systems runbook", "expectedSource": "distributed-systems-runbook.md" },
+    { "id": "GAR-01", "query": "tomatoes basil drip", "expectedSource": "urban-garden-plan.md" },
+    { "id": "GAR-02", "query": "drip irrigation", "expectedSource": "urban-garden-plan.md" },
+    { "id": "GAR-03", "query": "clay soil compost garden", "expectedSource": "urban-garden-plan.md" },
+    { "id": "GAR-04", "query": "native pollinator flowers crop", "expectedSource": "urban-garden-plan.md" },
+    { "id": "GAR-05", "query": "urban garden plan", "expectedSource": "urban-garden-plan.md" },
+    { "id": "HIS-01", "query": "informed consent interview", "expectedSource": "oral-history-methods.md" },
+    { "id": "HIS-02", "query": "open-ended questions", "expectedSource": "oral-history-methods.md" },
+    { "id": "HIS-03", "query": "audio archive transcript narrators", "expectedSource": "oral-history-methods.md" },
+    { "id": "HIS-04", "query": "narrators review passages", "expectedSource": "oral-history-methods.md" },
+    { "id": "HIS-05", "query": "oral history methods", "expectedSource": "oral-history-methods.md" },
+    { "id": "A11-01", "query": "visible keyboard focus interfaces", "expectedSource": "accessibility-audit.md" },
+    { "id": "A11-02", "query": "semantic headings", "expectedSource": "accessibility-audit.md" },
+    { "id": "A11-03", "query": "color contrast labels", "expectedSource": "accessibility-audit.md" },
+    { "id": "A11-04", "query": "screen reader WCAG", "expectedSource": "accessibility-audit.md" },
+    { "id": "A11-05", "query": "accessibility audit", "expectedSource": "accessibility-audit.md" },
+    { "id": "FIN-01", "query": "accounts receivable revenue forecast", "expectedSource": "cashflow-forecast.md" },
+    { "id": "FIN-02", "query": "rolling cash flow", "expectedSource": "cashflow-forecast.md" },
+    { "id": "FIN-03", "query": "burn rate runway cash", "expectedSource": "cashflow-forecast.md" },
+    { "id": "FIN-04", "query": "payment timing reserve", "expectedSource": "cashflow-forecast.md" },
+    { "id": "FIN-05", "query": "cashflow forecast", "expectedSource": "cashflow-forecast.md" },
+    { "id": "NAV-01", "query": "topographic map compass", "expectedSource": "trail-navigation.md" },
+    { "id": "NAV-02", "query": "contour lines landmarks compass", "expectedSource": "trail-navigation.md" },
+    { "id": "NAV-03", "query": "backcountry navigation", "expectedSource": "trail-navigation.md" },
+    { "id": "NAV-04", "query": "turnaround time shelter hikers", "expectedSource": "trail-navigation.md" },
+    { "id": "NAV-05", "query": "trail navigation", "expectedSource": "trail-navigation.md" },
+    { "id": "PRI-01", "query": "privacy threat model", "expectedSource": "privacy-threat-model.md" },
+    { "id": "PRI-02", "query": "data flow trust boundaries privacy", "expectedSource": "privacy-threat-model.md" },
+    { "id": "PRI-03", "query": "data minimization local storage privacy", "expectedSource": "privacy-threat-model.md" },
+    { "id": "PRI-04", "query": "retention attacker capability", "expectedSource": "privacy-threat-model.md" },
+    { "id": "PRI-05", "query": "encryption access control deletion", "expectedSource": "privacy-threat-model.md" },
+    { "id": "MUS-01", "query": "accession number provenance", "expectedSource": "museum-cataloging.md" },
+    { "id": "MUS-02", "query": "object condition dimensions", "expectedSource": "museum-cataloging.md" },
+    { "id": "MUS-03", "query": "conservation history accession", "expectedSource": "museum-cataloging.md" },
+    { "id": "MUS-04", "query": "controlled vocabulary photography", "expectedSource": "museum-cataloging.md" },
+    { "id": "MUS-05", "query": "museum cataloging", "expectedSource": "museum-cataloging.md" }
+  ]
+}

@@ -11,6 +11,7 @@ const documentSummary = {
   name: "research.md",
   size: 42,
   createdAt: "2026-07-30 12:00:00",
+  tags: [],
 };
 
 function jsonResponse(body: unknown, status = 200) {
@@ -28,13 +29,26 @@ describe("Sourcebound workspace", () => {
       "fetch",
       vi.fn((input: RequestInfo | URL, init?: RequestInit) => {
         const url = String(input);
-        if (url === "/api/documents" && init?.method === "POST") {
+        if (url === "/api/documents/batch" && init?.method === "POST") {
+          return jsonResponse(
+            {
+              imported: 1,
+              documents: [{ ...documentSummary, content: "Trustworthy source text." }],
+            },
+            201,
+          );
+        }
+        if (url.startsWith("/api/documents?") || url === "/api/documents") {
+          return jsonResponse([documentSummary]);
+        }
+        if (url === "/api/tags") return jsonResponse([{ name: "research", count: 1 }]);
+        if (url === "/api/documents/1/tags" && init?.method === "PATCH") {
           return jsonResponse({
             ...documentSummary,
             content: "Trustworthy source text.",
-          }, 201);
+            tags: ["research"],
+          });
         }
-        if (url === "/api/documents") return jsonResponse([documentSummary]);
         if (url === "/api/documents/1") {
           return jsonResponse({ ...documentSummary, content: "Trustworthy source text." });
         }
@@ -65,7 +79,7 @@ describe("Sourcebound workspace", () => {
     const file = new File(["Trustworthy source text."], "research.md", {
       type: "text/markdown",
     });
-    await user.upload(screen.getByLabelText("Choose a Markdown or text file"), file);
+    await user.upload(screen.getByLabelText("Choose Markdown or text files"), file);
     await screen.findByText("Trustworthy source text.");
     await user.type(screen.getByLabelText("Search documents"), "trustworthy");
     await screen.findByText("trustworthy");
@@ -91,13 +105,70 @@ describe("Sourcebound workspace", () => {
     await user.tab();
     expect(document.activeElement).toBe(screen.getByLabelText("Sourcebound home"));
     await user.tab();
-    expect(document.activeElement).toBe(screen.getByLabelText("Import document"));
+    expect(document.activeElement).toBe(screen.getByLabelText("Import files"));
     await user.tab();
+    expect(document.activeElement).toBe(screen.getByLabelText("Import folder"));
+    await user.tab();
+    expect(document.activeElement).toBe(screen.getByLabelText("Search documents"));
+
+    await user.click(screen.getByText("research.md"));
+    await screen.findByText("Trustworthy source text.");
+    await user.keyboard("/");
     expect(document.activeElement).toBe(screen.getByLabelText("Search documents"));
 
     fireEvent.keyDown(screen.getByLabelText("Search documents"), { key: "Escape" });
     await waitFor(() => {
       expect((screen.getByLabelText("Search documents") as HTMLInputElement).value).toBe("");
     });
+  });
+
+  it("edits tags and sends active filename filters to the library API", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await screen.findByText("research.md");
+    await user.click(screen.getByText("research.md"));
+    await screen.findByText("Trustworthy source text.");
+
+    await user.type(screen.getByRole("textbox", { name: "Add tag" }), "Research");
+    await user.click(screen.getByRole("button", { name: "Add tag" }));
+    await screen.findByText("research");
+
+    await user.click(screen.getByRole("button", { name: "Search filters" }));
+    await user.type(screen.getByLabelText("Filename"), "research");
+    await waitFor(() => {
+      expect(fetch).toHaveBeenCalledWith("/api/documents?filename=research");
+    });
+    await user.selectOptions(screen.getByLabelText("Tag"), "research");
+    await user.type(screen.getByLabelText("Search documents"), "trustworthy");
+    await waitFor(() => {
+      expect(fetch).toHaveBeenCalledWith(
+        "/api/search?q=trustworthy&filename=research&tag=research",
+        expect.objectContaining({ signal: expect.any(AbortSignal) }),
+      );
+    });
+    await user.click(screen.getByRole("button", { name: "Clear filters" }));
+    expect((screen.getByLabelText("Search documents") as HTMLInputElement).value).toBe(
+      "trustworthy",
+    );
+  });
+
+  it("imports only supported files from a mixed folder selection", async () => {
+    render(<App />);
+    await screen.findByText("research.md");
+    const markdown = new File(["Supported note."], "supported.md", {
+      type: "text/markdown",
+    });
+    const image = new File(["not supported"], "photo.png", { type: "image/png" });
+
+    fireEvent.change(screen.getByLabelText("Choose a folder"), {
+      target: { files: [markdown, image] },
+    });
+
+    await screen.findByText("Imported 1 source; skipped 1 unsupported file.");
+    const batchCall = vi
+      .mocked(fetch)
+      .mock.calls.find(([url, options]) => url === "/api/documents/batch" && options?.method === "POST");
+    const form = batchCall?.[1]?.body as FormData;
+    expect(form.getAll("files")).toHaveLength(1);
   });
 });

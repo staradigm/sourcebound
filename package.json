@@ -1,6 +1,6 @@
 {
   "name": "sourcebound",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "engines": {
@@ -12,6 +12,7 @@
     "dev:web": "vite",
     "build": "tsc -b && vite build",
     "benchmark": "tsx server/benchmark.ts",
+    "eval:retrieval": "tsx server/retrieval-eval.ts",
     "verify:keyboard": "tsx scripts/keyboard-verify.ts",
     "start": "tsx server/index.ts",
     "test": "vitest run",
