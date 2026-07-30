@@ -33,6 +33,15 @@ npm run benchmark
 npm audit
 ```
 
+With the development server running and Google Chrome installed:
+
+```bash
+npm run verify:keyboard
+```
+
+This performs the import-search-open workflow entirely through keyboard activation at
+320 px and 1440 px, then runs axe-core in the real browser.
+
 ## Privacy model
 
 The MVP has no authentication, analytics, model API, or cloud sync. The React client

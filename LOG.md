@@ -123,3 +123,83 @@ all critical and high-severity issues.
 
 Commit the release candidate, obtain green CI on that exact commit, and have all three
 review agents re-check the remediation before pilot UAT and release.
+
+## Iteration 3 - Release-candidate verification
+
+**Date:** 2026-07-30
+
+**Candidate**
+
+- Commit: `f9577de`
+- GitHub Actions run: `30579559539`
+- CI result: pass on `npm ci`, lint, 11 tests, build, disk benchmark, and audit.
+
+**Independent re-review**
+
+- Code/security: all prior findings fixed; no critical or high findings remain. One new
+  low benchmark cleanup edge was accepted for immediate correction.
+- UX/accessibility: high contrast issue and all prior medium findings fixed; no critical
+  or high findings remain. One pending-state wording issue was accepted for immediate
+  correction.
+- Product/release: engineering gates pass; keyboard operation at both required viewport
+  widths, pilot UAT, and final tag/release remained.
+
+**Final polish**
+
+- Made benchmark cleanup reliable even when database reopen fails.
+- Added a visible “Searching sources” state so pending work is not presented as zero
+  matches.
+- Updated GitHub Actions from v4 to v5 to remove Node 20 action-runtime deprecation.
+- Added a reproducible real-Chrome keyboard verifier.
+
+**Browser keyboard evidence**
+
+`npm run verify:keyboard` completed import-search-open through keyboard activation and
+ran axe-core in real Chrome:
+
+| Viewport | Workflow | Serious/critical axe violations |
+| --- | --- | --- |
+| 320x800 | pass | 0 |
+| 1440x900 | pass | 0 |
+
+**Next action**
+
+Complete independent first-time pilot UAT, run the final clean-install gate, publish the
+release commit, obtain green CI, and create the `v0.1.0` GitHub release.
+
+## Iteration 4 - Pilot UAT and final gate
+
+**Date:** 2026-07-30
+
+**Independent pilot**
+
+- Environment: headless Google Chrome, 1440x900.
+- Fixture: a 171-byte Markdown note created outside the repository.
+- Import: pass; the visible file picker added the named note to the library.
+- Search: pass; the distinctive two-word query returned exactly one matching result.
+- Open: pass; the reader announced “Source opened” and displayed the complete original
+  Markdown from title through final line.
+- Pilot-reported app hesitation or error: none.
+- Screenshot evidence: `/tmp/pilot-uat-final.png`.
+
+**Final local gate**
+
+- `npm ci`: pass; 385 packages audited, zero vulnerabilities.
+- `npm run lint`: pass.
+- `npm test`: 4 files, 11 tests pass.
+- `npm run build`: pass.
+- `npm run benchmark`: reopened file database, 2.627 ms p95, 500 ms target.
+- `npm audit`: zero vulnerabilities.
+- `git diff --check`: pass.
+
+**Stop-condition assessment**
+
+- All PRD acceptance criteria: pass.
+- API integration and persistence coverage: pass.
+- Real-browser keyboard workflow at 320 px and 1440 px: pass.
+- Serious/critical real-browser axe violations: zero.
+- Independent critical/high findings: zero after re-review.
+- Pilot import-search-open workflow: pass.
+- Public repository and contribution documentation: present.
+- Remaining actions: verify CI on the final release commit, tag it, and publish the
+  GitHub release.

@@ -3,7 +3,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { performance } from "node:perf_hooks";
 import { pathToFileURL } from "node:url";
-import { createStore } from "./store.js";
+import { createStore, type Store } from "./store.js";
 
 const NOTE_COUNT = 1_000;
 const SEARCH_COUNT = 100;
@@ -12,7 +12,7 @@ const TARGET_P95_MS = 500;
 export function runBenchmark() {
   const directory = mkdtempSync(join(tmpdir(), "sourcebound-benchmark-"));
   const databasePath = join(directory, "benchmark.db");
-  let store = createStore(databasePath);
+  let store: Store | undefined = createStore(databasePath);
   const topics = ["retrieval", "citations", "privacy", "indexing", "research"];
 
   try {
@@ -26,6 +26,7 @@ export function runBenchmark() {
     }
 
     store.close();
+    store = undefined;
     store = createStore(databasePath);
     const durations: number[] = [];
     for (let index = 0; index < SEARCH_COUNT; index += 1) {
@@ -47,8 +48,11 @@ export function runBenchmark() {
       platform: `${process.platform}/${process.arch}`,
     };
   } finally {
-    store.close();
-    rmSync(directory, { recursive: true, force: true });
+    try {
+      store?.close();
+    } finally {
+      rmSync(directory, { recursive: true, force: true });
+    }
   }
 }
 

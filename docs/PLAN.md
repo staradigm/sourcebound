@@ -1,6 +1,6 @@
 # Delivery Plan
 
-## Milestone 1: Searchable local library (release verification)
+## Milestone 1: Searchable local library (complete)
 
 - [x] Define MVP scope, user stories, acceptance criteria, and success metrics.
 - [x] Create React workspace and local HTTP API.

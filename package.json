@@ -12,6 +12,7 @@
     "dev:web": "vite",
     "build": "tsc -b && vite build",
     "benchmark": "tsx server/benchmark.ts",
+    "verify:keyboard": "tsx scripts/keyboard-verify.ts",
     "start": "tsx server/index.ts",
     "test": "vitest run",
     "lint": "eslint ."
@@ -41,6 +42,7 @@
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^16.3.0",
     "jsdom": "^29.1.1",
+    "playwright-core": "^1.62.1",
     "supertest": "^7.2.2",
     "tsx": "^4.20.3",
     "typescript": "~5.8.3",

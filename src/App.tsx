@@ -254,10 +254,14 @@ export function App() {
 
             {!(query.trim() ? results : documents).length && (
               <div className="empty-list">
-                <FileText size={24} />
-                <p>{query ? "No matching passages" : "No sources yet"}</p>
+                {searching ? <Search size={24} /> : <FileText size={24} />}
+                <p>
+                  {searching ? "Searching sources" : query ? "No matching passages" : "No sources yet"}
+                </p>
                 <span>
-                  {query
+                  {searching
+                    ? "Checking every indexed passage."
+                    : query
                     ? "Try another word or phrase."
                     : "Import a Markdown or text file to begin."}
                 </span>
