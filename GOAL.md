@@ -1,5 +1,7 @@
 # Sourcebound MVP Execution Goal
 
+**Status:** Complete as of `v0.1.0` on 2026-07-30.
+
 ## Objective
 
 Finish and publicly release the Sourcebound MVP as a trustworthy local-first document

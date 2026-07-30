@@ -203,3 +203,24 @@ release commit, obtain green CI, and create the `v0.1.0` GitHub release.
 - Public repository and contribution documentation: present.
 - Remaining actions: verify CI on the final release commit, tag it, and publish the
   GitHub release.
+
+## Iteration 5 - Public release
+
+**Date:** 2026-07-30
+
+**Release evidence**
+
+- Verified release commit: `ea9cdc1`.
+- GitHub Actions run `30580259708`: pass on install, lint, tests, build, benchmark, and
+  audit.
+- Tag: `v0.1.0`.
+- Public release: `https://github.com/staradigm/sourcebound/releases/tag/v0.1.0`.
+- Release changelog and reproducible run instructions: present.
+- Repository identity and commit attribution: `staradigm`.
+
+**Final stop-condition result**
+
+Every quality gate in `GOAL.md` passes. All in-scope Milestone 1 items are complete,
+independent reviewers report no unresolved critical or high findings, pilot UAT passes,
+and the verified release is public. The execution loop stops here. Later milestones
+remain roadmap work and do not extend this completed MVP goal.
